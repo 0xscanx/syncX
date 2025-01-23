@@ -1,0 +1,8 @@
+{
+  "externally_connectable": {
+    "matches": ["https://twitter.com/*", "https://x.com/*", "https://warpcast.com/*", "https://hey.xyz/*"],
+    "ids": ["*"]
+  },
+
+  "minimum_chrome_version": "100"
+}

@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "version": "1.0",
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appName__",
+
+  "default_locale": "en",
+  "description": "__MSG_appDescription__",
+  "icons": {
+    "32": "/images/logo/logo32.png"
+  },
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "host_permissions": ["https://twitter.com/*", "https://x.com/*"],
+  "permissions": ["storage", "tabs"],
+
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
+      "js": ["twitter-content.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://warpcast.com/*"],
+      "js": ["warpcast-content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://hey.xyz/*"],
+      "js": ["hey-content.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}
