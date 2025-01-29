@@ -46,32 +46,11 @@ class Lens {
   }
 
   private async getProfiles() {
-    let profile = localStorage.getItem('profile');
-    if (profile) {
-      return JSON.parse(profile);
+    const profile = localStorage.getItem('account.store');
+    if (!profile) {
+      throw new Error('Profile not found');
     }
-
-    const query = `query Profiles($request: ProfilesRequest!) {
-  result: profiles(request: $request) {
-    items {
-      id
-      handle {
-        localName
-        fullHandle
-      }
-      ownedBy {
-        address
-      }
-    }
-  }
-}`;
-
-    const variables = { request: { limit: 'Fifty', where: { ownedBy: [this.address] } } };
-    const { data } = await this.fetchGraphQL(query, variables, 'Profiles');
-
-    profile = data.result.items[0];
-    localStorage.setItem('profile', JSON.stringify(profile));
-    return profile;
+    return JSON.parse(profile).state.currentAccount;
   }
 
   private async createMetadata(profile, description, images) {
@@ -83,8 +62,7 @@ class Lens {
       id: uuid(),
       appId: 'Hey',
       locale: 'zh',
-      content: `${description}!\n`,
-      title: `Post by @${localName}`
+      content: `${description}!`,
     };
 
     let contentType = 'text-only';
@@ -96,7 +74,11 @@ class Lens {
 
     if (images && images.length) {
       const image = images.shift();
-      Object.assign(lens, { image, mainContentFocus: 'IMAGE' });
+      Object.assign(lens, { 
+        image, 
+        mainContentFocus: 'IMAGE',
+        title: `Post by @${localName}`
+      });
 
       if (images.length) {
         Object.assign(lens, { attachments: images });

@@ -1,11 +1,10 @@
 {
   "manifest_version": 3,
-  "version": "1.0",
-  "name": "__MSG_appName__",
-  "short_name": "__MSG_appName__",
+  "version": "1.0.1",
+  "name": "SyncX",
 
   "default_locale": "en",
-  "description": "__MSG_appDescription__",
+  "description": "SyncX could help you share your Twitter content across multiple social platforms like warpcast or lens, all in one place.",
   "icons": {
     "32": "/images/logo/logo32.png"
   },
@@ -16,7 +15,7 @@
   },
 
   "host_permissions": ["https://twitter.com/*", "https://x.com/*"],
-  "permissions": ["storage", "tabs"],
+  "permissions": ["tabs"],
 
   "content_scripts": [
     {
